@@ -12,7 +12,6 @@ var client = new Twitter({
 });
 
 /* GET home page. */
-
 router.get('/recent', function(req, res, next) {
   let recent = {screen_name: req.query.recent}
   client.get('statuses/user_timeline', recent , function(error, tweets, response) {

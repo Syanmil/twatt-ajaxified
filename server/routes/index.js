@@ -13,10 +13,10 @@ var client = new Twitter({
 
 /* GET home page. */
 router.get('/recent', function(req, res, next) {
-  let recent = {screen_name: req.query.recent}
+  let recent = {screen_name: 'Syanmil'}
   client.get('statuses/user_timeline', recent , function(error, tweets, response) {
     if (!error) {
-      res.json(tweets);
+      res.send(tweets);
     }
     else {
       res.json({ error: error });
@@ -27,7 +27,7 @@ router.get('/home', function(req, res, next) {
   let home = {count: 20}
   client.get('statuses/home_timeline', home , function(error, tweets, response) {
     if (!error) {
-      res.json(tweets);
+      res.send(tweets);
     }
     else {
       res.json({ error: error });

@@ -34,5 +34,16 @@ router.get('/home', function(req, res, next) {
     }
   });
 });
+router.post('/update', function(req, res, next) {
+  let update = {status: req.body.update}
+  client.post('statuses/update', update , function(error, tweets, response) {
+    if (!error) {
+      res.send(tweets);
+    }
+    else {
+      res.send({ error: error });
+    }
+  });
+});
 
 module.exports = router;

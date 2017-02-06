@@ -12,11 +12,44 @@
   <body>
     <h1>Twitter AJAX</h1>
     <p>Welcome to Twitter AJAX</p>
-    <button type="button" id="recent" name="button">RECENT</button>
+    <button type="button" name="button" onclick="recent()">RECENT</button>
+    <form id="updatestatus" method="post">
+      <input type="text" name="update">
+      <input type="submit" value="Update Status" onclick="update()">
+    </form>
+    <div id="twitter"></div>
   </body>
   <script type="text/javascript">
-    $.ajax({
-
+    $('#updatestatus').submit(function(e){
+      e.preventDefault()
+      let updatetwit = $('input[name=update]').val()
+      $.ajax({
+        type: 'POST',
+        url: 'http://localhost:3000/api/update',
+        data: {update: updatetwit},
+        dataType: 'json',
+        success: function(status) {
+          $('#twitter').prepend(`<p>${status.text}</p>`)
+        },
+        fail: function(err){
+          console.log(err);
+        }
+      })
     })
+    function recent(){
+      $.ajax({
+        type: 'GET',
+        url: 'http://localhost:3000/api/recent',
+        success: function(data){
+          $('#twitter').empty()
+          data.forEach(function(twit){
+            $('#twitter').append(`<p>${twit.text}</p>`)
+          })
+        },
+        fail: function(err){
+          console.log(err);
+        }
+      })
+    }
   </script>
 </html>
